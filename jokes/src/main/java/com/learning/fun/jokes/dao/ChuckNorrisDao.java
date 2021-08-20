@@ -4,6 +4,9 @@ import com.learning.fun.jokes.model.response.Joke;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -17,13 +20,16 @@ public class ChuckNorrisDao {
     private static final String CATEGORY = "category";
     private String jokeCategory = null;
 
+    @Value("${chucknorris.api.host}")
+    String apiHost;
+
     public String getJoke(String category){
         String joke = null;
         this.jokeCategory = category;
 
         WebClient client = webClient
-                .baseUrl("https://api.chucknorris.io")
-                .defaultHeader("accept", "application/json")
+                .baseUrl(apiHost)
+                .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .build();
 
         Joke response = client.get()
