@@ -14,7 +14,7 @@ public class JokesController {
 
     private final ChuckNorrisDao jokesDao;
 
-    private final String INVALID_CATEGORY = "Invalid category. Valid categories are CAREER, CELEBRITY, DEV, MUSIC, SPORT, SCIENCE";
+    private static final String INVALID_CATEGORY = "Invalid category. Valid categories are CAREER, CELEBRITY, DEV, MUSIC, SPORT, SCIENCE";
 
     @GetMapping(path="/joke")
     public String getJoke(@RequestParam String category){
