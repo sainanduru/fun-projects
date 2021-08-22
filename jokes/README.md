@@ -4,6 +4,7 @@
 - Gets a list of jokes limited to 5
 - Sends joke as a text message or notification
 
-#### Technical Stack
-- Spring Webclient
+#### Technical Details
+- Uses Spring Webclient
 - Resilience4J to retry
+- Spring AOP to capture timings
