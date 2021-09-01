@@ -15,6 +15,7 @@
     <description>Get a Joke from Chuck Norries API</description>
     <properties>
         <java.version>11</java.version>
+        <mockwebserver.version>2.7.5</mockwebserver.version>
     </properties>
     <dependencies>
         <dependency>
@@ -39,6 +40,14 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>mockwebserver</artifactId>
+            <version>${mockwebserver.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+
     </dependencies>
 
     <build>
