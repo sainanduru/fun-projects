@@ -6,9 +6,11 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 @Log4j2
 @Service
@@ -38,6 +40,8 @@ public class ChuckNorrisDao {
                         .queryParam(CATEGORY, this.jokeCategory)
                         .build())
                 .retrieve()
+                .onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new Exception("Invalid Request")))
+                .onStatus(HttpStatus::is5xxServerError, clientResponse -> Mono.error(new Exception("ChuckNorris API unavailable")))
                 .bodyToMono(Joke.class)
                 .block();
 
