@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
 
 @ExtendWith(MockitoExtension.class)
 class JokesControllerTest {
@@ -24,9 +25,9 @@ class JokesControllerTest {
         String expectedResponse = "It's a joke!";
         Mockito.when(chuckNorrisDao.getJoke(Mockito.anyString())).thenReturn(expectedResponse);
 
-        String actualResponse = controller.getJoke("Dev");
+        ResponseEntity actualResponse = controller.getJoke("Dev");
 
-        Assertions.assertEquals(expectedResponse, actualResponse);
+        Assertions.assertEquals(expectedResponse, actualResponse.getBody());
 
     }
 
@@ -35,8 +36,8 @@ class JokesControllerTest {
 
         String expectedResponse = "Invalid category. Valid categories are CAREER, CELEBRITY, DEV, MUSIC, SPORT, SCIENCE";
 
-        String actualResponse = controller.getJoke("test");
+        ResponseEntity actualResponse = controller.getJoke("test");
 
-        Assertions.assertEquals(expectedResponse, actualResponse);
+        Assertions.assertEquals(expectedResponse, actualResponse.getBody());
     }
 }

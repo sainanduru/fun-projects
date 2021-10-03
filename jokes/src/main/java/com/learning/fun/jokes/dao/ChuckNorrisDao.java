@@ -1,5 +1,6 @@
 package com.learning.fun.jokes.dao;
 
+import com.learning.fun.jokes.exception.CustomException;
 import com.learning.fun.jokes.model.response.Joke;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -11,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+
+import java.util.function.Predicate;
 
 @Log4j2
 @Service
@@ -40,10 +43,12 @@ public class ChuckNorrisDao {
                         .queryParam(CATEGORY, this.jokeCategory)
                         .build())
                 .retrieve()
-                .onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new Exception("Invalid Request")))
-                .onStatus(HttpStatus::is5xxServerError, clientResponse -> Mono.error(new Exception("ChuckNorris API unavailable")))
+                .onStatus(HttpStatus::is4xxClientError, clientResponse -> Mono.error(new CustomException("Invalid Request")))
+                .onStatus(HttpStatus::is5xxServerError, clientResponse -> Mono.error(new CustomException("ChuckNorris API unavailable")))
                 .bodyToMono(Joke.class)
+                .onErrorMap(Predicate.not(CustomException.class:: isInstance), throwable -> new Exception("ChuckNorris API is unavailable"))
                 .block();
+
 
         log.info(response.toString());
 
