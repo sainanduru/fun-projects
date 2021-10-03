@@ -25,7 +25,7 @@ class JokesControllerTest {
         String expectedResponse = "It's a joke!";
         Mockito.when(chuckNorrisDao.getJoke(Mockito.anyString())).thenReturn(expectedResponse);
 
-        ResponseEntity actualResponse = controller.getJoke("Dev");
+        ResponseEntity actualResponse = controller.getJoke("DEV");
 
         Assertions.assertEquals(expectedResponse, actualResponse.getBody());
 

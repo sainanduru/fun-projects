@@ -22,7 +22,7 @@ public class JokesController {
     public ResponseEntity<String> getJoke(@RequestParam String category){
         CategoryValidator categoryValidator = new CategoryValidator();
         try{
-            if(categoryValidator.isValidCategory(category)){
+            if(categoryValidator.isValidCategory(category.toUpperCase())){
                 return new ResponseEntity<>(jokesDao.getJoke(category), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(INVALID_CATEGORY, HttpStatus.BAD_REQUEST);

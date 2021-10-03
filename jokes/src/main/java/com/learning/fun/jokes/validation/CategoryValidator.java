@@ -6,13 +6,7 @@ public class CategoryValidator {
 
     public boolean isValidCategory(String givenCategory){
         boolean isValid = false;
-        Category[] acceptedCategories = Category.values();
-        for (Category category: acceptedCategories) {
-            if(category.toString().equals(givenCategory.toUpperCase())){
-                isValid = true;
-                break;
-            }
-        }
+        isValid = Category.isValid(givenCategory);
         return isValid;
     }
 }
